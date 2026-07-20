@@ -9,28 +9,19 @@
 
   # List of packages to install
   environment.systemPackages = with pkgs; [
-    vscode
     nodejs
     tig
     git-lfs
     lazygit
     maccy
     tree
-    nixfmt-rfc-style # For nix formatting
+    nixfmt # For nix formatting
     quarto # For documents
     gnupg
     zoxide
     neovim
     cmake
     tmux
-    (rstudioWrapper.override {
-      packages = with rPackages; [
-        ggplot2
-        dplyr
-        tidyverse
-        languageserver # Useful if you also use R in VS Code
-      ];
-    })
     statix
     docker
     docker-compose

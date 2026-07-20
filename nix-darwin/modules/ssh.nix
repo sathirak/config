@@ -32,7 +32,6 @@
     enable = true;
     shellAliases = {
       nixup = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
-      c = "code";
       cl = "clear";
       n = "nvim";
       lg = "lazygit";

@@ -4,11 +4,11 @@
   ...
 }:
 let
-  jdk = pkgs.javaPackages.compiler.openjdk24;
+  jdk = pkgs.javaPackages.compiler.openjdk25;
 in
 {
   home.packages = with pkgs; [
-    # JDK 24 - for Spring Boot and modern Java
+    # JDK 25 - for Spring Boot and modern Java
     jdk
     # Build tools commonly used with Spring Boot
     maven

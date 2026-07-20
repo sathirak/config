@@ -1,1 +1,1 @@
-/nix/store/pkglinlyw8wxs3k3sx0bqxg2vc6dindn-home-manager-files/.config/fish/functions/__notify_long_command.fish
+/nix/store/p0rg8wiwnsy9f4fj34gdhalj7m9saq8x-home-manager-files/.config/fish/functions/__notify_long_command.fish

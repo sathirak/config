@@ -40,19 +40,37 @@ let
       };
 in
 {
-  programs.neovim = {
-    enable = true;
-    package = pkgs.neovim-unwrapped;
-    extraPackages = with pkgs; [
-      tree-sitter-cli
-      mercurial
-      imagemagick
-      tectonic
-      mermaid-cli
-      go
-      luarocks
-      php
-      phpPackages.composer
-    ];
+  # Do not use programs.neovim — it overwrites ~/.config/nvim/init.lua and fights
+  # the git-managed kickstart/argus config. Install the binary + tools only.
+  home.packages = with pkgs; [
+    neovim
+    tree-sitter-cli
+    mercurial
+    imagemagick
+    tectonic
+    mermaid-cli
+    go
+    luarocks
+    php
+    phpPackages.composer
+
+    # Language servers / formatters (Mason can also install these)
+    # rust-analyzer / rustfmt / clippy come from rustup (modules/rust.nix)
+    nil
+    nixfmt
+    basedpyright
+    ruff
+    typescript-language-server
+    bash-language-server
+    fish-lsp
+    shellcheck
+    shfmt
+    stylua
+    prettierd
+  ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 }

@@ -1,28 +1,46 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
-vim.g.lazyvim_picker = "snacks"
+-- options: leaders, editor settings, diagnostics
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.g.have_nerd_font = true
 
-vim.opt.fillchars = {
-  vert = "┃", -- Thick vertical border
-  horiz = "━", -- Thick horizontal border
-  verthoriz = "╋", -- Thick cross intersection
-  horizup = "┻", -- Thick bottom T-junction
-  horizdown = "┳", -- Thick top T-junction
-  vertleft = "┫", -- Thick right T-junction
-  vertright = "┣", -- Thick left T-junction
+vim.o.number = true
+vim.o.mouse = 'a'
+vim.o.showmode = false
+vim.o.breakindent = true
+vim.o.undofile = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.signcolumn = 'yes'
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.list = true
+vim.o.inccommand = 'split'
+vim.o.cursorline = true
+vim.o.scrolloff = 10
+vim.o.confirm = true
+
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+end)
+
+vim.diagnostic.config {
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+  virtual_text = true,
+  virtual_lines = false,
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float {
+        bufnr = bufnr,
+        scope = 'cursor',
+        focus = false,
+      }
+    end,
+  },
 }
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    -- Links your borders to your theme's line number color (usually a clean, subtle gray/blue)
-    vim.api.nvim_set_hl(0, "WinSeparator", { link = "LineNr" })
-  end,
-})
-
--- Run it immediately for the current session
-vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ff007c", bg = "none" })
-
--- Maps Normal/Command mode to 'Cursor', and forces Visual mode to use 'VisualCursor'
-vim.opt.guicursor =
-  "n-c:block-Cursor,v:block-VisualCursor,i-ci-ve:ver25-Cursor,r-cr:hor20,o:blinkwait700-blinkoff400-blinkon250"
