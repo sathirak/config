@@ -1,0 +1,20 @@
+-- LazyExtras loaded via separate modules (see individual .lua files in this directory)
+return {
+  { import = "plugins.extras.yanky" },
+  { import = "plugins.extras.illuminate" },
+  { import = "plugins.extras.telescope" },
+  { import = "plugins.extras.clangd" },
+  { import = "plugins.extras.git" },
+  { import = "plugins.extras.json" },
+  { import = "plugins.extras.markdown" },
+  { import = "plugins.extras.nix" },
+  { import = "plugins.extras.python" },
+  { import = "plugins.extras.toml" },
+  { import = "plugins.extras.typescript" },
+  { import = "plugins.extras.typescript-vtsls" },
+  { import = "plugins.extras.yaml" },
+  { import = "plugins.extras.smear-cursor" },
+  { import = "plugins.extras.dot" },
+  { import = "plugins.extras.project" },
+  { import = "plugins.extras.startuptime" },
+}
