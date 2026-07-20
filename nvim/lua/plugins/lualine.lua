@@ -2,6 +2,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
+    enabled = true,
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
       if vim.fn.argc(-1) > 0 then
@@ -33,7 +34,7 @@ return {
 
       local opts = {
         options = {
-          theme = "auto",
+          theme = "ayu",
           component_separators = { left = " > ", right = "< " },
           section_separators = { left = " ", right = " " },
           globalstatus = vim.o.laststatus == 3,

@@ -91,38 +91,3 @@ keybind = alt+shift+l=resize_split:right,10
 # --- Clean up ---
 keybind = cmd+w=close_surface
 
-
-# =========================================================
-# --- NEOVIM & MODAL SCROLLING CONFIGURATION ---
-# =========================================================
-
-# Hack 1: Open Scrollback directly in Neovim
-# Pressing Cmd+Shift+E will instantly dump the terminal history into a temporary 
-# Neovim buffer where you can use your real Neovim config to scroll, search, or yank.
-keybind = cmd+shift+e=write_scrollback_file:open
-
-
-# Hack 2: Native Ghostty "Vim Normal Mode"
-# Press Alt+Escape to enter a native Normal Mode to look through history.
-keybind = alt+escape=activate_key_table:vim
-
-# Initialize the vim key table
-keybind = vim/
-
-# Vim scrolling movements inside the terminal
-keybind = vim/j=scroll_page_lines:1
-keybind = vim/k=scroll_page_lines:-1
-keybind = vim/ctrl+d=scroll_page_down
-keybind = vim/ctrl+u=scroll_page_up
-
-# Vim file-jumping movements
-keybind = vim/g>g=scroll_to_top
-keybind = vim/shift+g=scroll_to_bottom
-
-# Exit back to regular typing input (Insert Mode)
-keybind = vim/escape=deactivate_key_table
-keybind = vim/i=deactivate_key_table
-
-# Catch-all: Ignore all other standard key inputs while inside normal mode 
-# so you don't accidentally execute or type random commands into the shell
-keybind = vim/catch_all=ignore

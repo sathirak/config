@@ -22,3 +22,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 -- Run it immediately for the current session
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#ff007c", bg = "none" })
+
+-- Maps Normal/Command mode to 'Cursor', and forces Visual mode to use 'VisualCursor'
+vim.opt.guicursor =
+  "n-c:block-Cursor,v:block-VisualCursor,i-ci-ve:ver25-Cursor,r-cr:hor20,o:blinkwait700-blinkoff400-blinkon250"

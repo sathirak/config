@@ -8,21 +8,24 @@ vim.keymap.set("n", "<leader>n", function()
   require("nvim-navbuddy").open()
 end, { desc = "Navbuddy" })
 
--- Cycle through nightfox styles (carbonfox, terafox, nightfox, dayfox, dawnfox, duskfox, nordfox)
-local fox_styles = { "carbonfox", "terafox", "nightfox", "dayfox", "dawnfox", "duskfox", "nordfox" }
+-- Cycle through ayu variants (ayu, ayu-dark, ayu-mirage, ayu-light)
+local ayu_styles = { "ayu", "ayu-dark", "ayu-mirage", "ayu-light" }
 vim.keymap.set("n", "<leader>ut", function()
-  local current = vim.g.colors_name or "carbonfox"
+  local current = vim.g.colors_name or "ayu"
   local idx = 1
-  for i, name in ipairs(fox_styles) do
-    if name == current then idx = i break end
+  for i, name in ipairs(ayu_styles) do
+    if name == current then
+      idx = i
+      break
+    end
   end
-  idx = (idx % #fox_styles) + 1
-  local next_style = fox_styles[idx]
+  idx = (idx % #ayu_styles) + 1
+  local next_style = ayu_styles[idx]
   vim.cmd.colorscheme(next_style)
-  vim.notify("Colorscheme: " .. next_style, vim.log.levels.INFO, { title = "Nightfox" })
-end, { desc = "Cycle fox colorscheme" })
+  vim.notify("Colorscheme: " .. next_style, vim.log.levels.INFO, { title = "Ayu" })
+end, { desc = "Cycle ayu colorscheme" })
 
--- Ghostty + Neovim: Dawnfox (light) / Carbonfox (dark); see ~/.config/bin/toggle-appearance
+-- Ghostty + Neovim: ayu-light (light) / ayu-dark (dark); see ~/.config/bin/toggle-appearance
 vim.keymap.set("n", "<leader>ub", function()
   local script = vim.fn.fnamemodify(vim.fn.stdpath("config"), ":h") .. "/bin/toggle-appearance"
   if vim.fn.executable(script) ~= 1 then
@@ -32,7 +35,7 @@ vim.keymap.set("n", "<leader>ub", function()
   local skip = vim.v.servername ~= "" and vim.v.servername or "none"
   local out = vim.fn.system({ script, "from-nvim", skip })
   local cs = vim.trim(out or "")
-  if cs == "dawnfox" or cs == "carbonfox" then
+  if cs == "ayu-light" or cs == "ayu-dark" then
     vim.cmd.colorscheme(cs)
     vim.notify("Appearance: " .. cs, vim.log.levels.INFO, { title = "Theme" })
   end
