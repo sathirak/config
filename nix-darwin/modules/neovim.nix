@@ -56,7 +56,7 @@ in
 
     # Language servers / formatters (Mason can also install these)
     # rust-analyzer / rustfmt / clippy come from rustup (modules/rust.nix)
-    nil
+    nixd
     nixfmt
     basedpyright
     ruff

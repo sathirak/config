@@ -10,4 +10,9 @@ require('gitsigns').setup {
     topdelete = { text = '‾' },
     changedelete = { text = '~' },
   },
+  on_attach = function(bufnr)
+    if vim.bo[bufnr].filetype == 'neo-tree' then
+      return false
+    end
+  end,
 }

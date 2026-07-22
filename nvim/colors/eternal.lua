@@ -129,11 +129,13 @@ hi('StatusLine', { bg = c.bg_dark, fg = c.fg })
 hi('StatusLineNC', { bg = c.bg_dark, fg = c.overlay0 })
 
 -- neo-tree
-hi('Directory', { fg = c.peach })
-hi('NeoTreeDirectoryIcon', { fg = c.peach })
-hi('NeoTreeDirectoryName', { fg = c.flamingo })
-hi('NeoTreeRootName', { fg = c.yellow, bold = true })
-hi('NeoTreeExpander', { fg = c.flamingo })
+hi('Directory', { fg = c.overlay2 })
+hi('NeoTreeDirectoryIcon', { fg = c.overlay2 })
+hi('NeoTreeDirectoryName', { fg = c.overlay2 })
+hi('NeoTreeFileIcon', { fg = c.overlay2 })
+hi('NeoTreeFileName', { fg = c.overlay2 })
+hi('NeoTreeRootName', { fg = c.subtext0, bold = true })
+hi('NeoTreeExpander', { fg = c.overlay2 })
 
 -- treesitter
 hi('@variable', { link = 'Identifier' })

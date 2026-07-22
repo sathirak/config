@@ -3,7 +3,23 @@ local gh = require('util').gh
 
 vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
-local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'nix', 'query', 'rust', 'vim', 'vimdoc' }
+local parsers = {
+  'bash',
+  'c',
+  'diff',
+  'fish',
+  'html',
+  'lua',
+  'luadoc',
+  'markdown',
+  'markdown_inline',
+  'nix',
+  'query',
+  'rust',
+  'vim',
+  'vimdoc',
+}
+
 require('nvim-treesitter').install(parsers)
 
 ---@param buf integer

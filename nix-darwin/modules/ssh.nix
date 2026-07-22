@@ -36,22 +36,6 @@
       n = "nvim";
       lg = "lazygit";
     };
-    functions = {
-      __notify_long_command = {
-        body = ''
-          set threshold 60000
-          if test $CMD_DURATION -gt $threshold
-            set elapsed (math -s3 "$CMD_DURATION / 1000")
-            if test (uname) = Darwin
-              osascript -e "display notification \"Finished in $elapsed seconds\" with title \"Command Completed\""
-            else if type -q notify-send
-              notify-send "Command Completed" "Finished in $elapsed seconds"
-            end
-          end
-        '';
-        onEvent = "fish_postexec";
-      };
-    };
     interactiveShellInit = ''
       # Single persistent ssh-agent (shared across terminals) for Git SSH signing.
       # ssh-add -l: 0 = keys present, 1 = agent empty but alive, 2 = cannot connect (stale/missing socket).
@@ -79,9 +63,6 @@
       end
       fish_add_path $HOME/.local/bin
       fish_add_path $HOME/.config/bin
-
-      # So `toggle-appearance` can sync all Neovim instances (nvim --serverlist)
-      set -gx NVIM_LISTEN_ADDRESS $HOME/.local/share/nvim/nvim.sock
     '';
   };
 }
