@@ -7,3 +7,12 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus lower' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus upper' })
+
+vim.keymap.set('n', 'J', function()
+  vim.diagnostic.open_float {
+    scope = 'line',
+    focus = false,
+    border = 'rounded',
+    source = 'if_many',
+  }
+end, { desc = 'Line Diagnostics' })

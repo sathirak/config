@@ -54,6 +54,16 @@ in
     php
     phpPackages.composer
 
+    # Fuzzy finder backends for fzf-lua
+    fzf
+    ripgrep
+    fd
+
+    # Bazel / Starlark
+    bazelisk
+    buildifier
+    starpls
+
     # Language servers / formatters (Mason can also install these)
     # rust-analyzer / rustfmt / clippy come from rustup (modules/rust.nix)
     nixd

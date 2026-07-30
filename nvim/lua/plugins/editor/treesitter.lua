@@ -16,11 +16,15 @@ local parsers = {
   'nix',
   'query',
   'rust',
+  'starlark',
   'vim',
   'vimdoc',
 }
 
 require('nvim-treesitter').install(parsers)
+
+-- BUILD / WORKSPACE / *.bzl use filetype "bzl"
+vim.treesitter.language.register('starlark', 'bzl')
 
 ---@param buf integer
 ---@param language string

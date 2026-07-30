@@ -9,19 +9,6 @@ vim.pack.add {
 
 vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
 
-local gray = '#9399b2'
-local gray_bright = '#a6adc8'
-
-local function neo_tree_highlights()
-  vim.api.nvim_set_hl(0, 'Directory', { fg = gray })
-  vim.api.nvim_set_hl(0, 'NeoTreeDirectoryIcon', { fg = gray })
-  vim.api.nvim_set_hl(0, 'NeoTreeDirectoryName', { fg = gray })
-  vim.api.nvim_set_hl(0, 'NeoTreeFileIcon', { fg = gray })
-  vim.api.nvim_set_hl(0, 'NeoTreeFileName', { fg = gray })
-  vim.api.nvim_set_hl(0, 'NeoTreeRootName', { fg = gray_bright, bold = true })
-  vim.api.nvim_set_hl(0, 'NeoTreeExpander', { fg = gray })
-end
-
 require('neo-tree').setup {
   enable_git_status = false,
   default_component_configs = {
@@ -31,6 +18,14 @@ require('neo-tree').setup {
       folder_empty = '',
       folder_empty_open = '',
       default = '',
+      -- nvim-web-devicons would otherwise fill file icons
+      provider = function(icon, node)
+        if node.type == 'file' then
+          icon.text = ''
+          icon.highlight = nil
+        end
+        return icon
+      end,
     },
     name = { use_git_status_colors = false },
   },
@@ -43,7 +38,6 @@ require('neo-tree').setup {
     },
     file = {
       { 'indent' },
-      { 'icon' },
       { 'name' },
     },
   },
@@ -85,9 +79,3 @@ require('neo-tree').setup {
     },
   },
 }
-
-neo_tree_highlights()
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('neo-tree-eternal-hl', { clear = true }),
-  callback = neo_tree_highlights,
-})

@@ -13,7 +13,9 @@ require('conform').setup {
   default_format_opts = {
     lsp_format = 'fallback',
   },
-  formatters_by_ft = {},
+  formatters_by_ft = {
+    bzl = { 'buildifier' },
+  },
 }
 
 vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
