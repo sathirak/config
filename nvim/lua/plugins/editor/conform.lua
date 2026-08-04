@@ -17,7 +17,3 @@ require('conform').setup {
     bzl = { 'buildifier' },
   },
 }
-
-vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
-  require('conform').format { async = true }
-end, { desc = 'Format buffer' })

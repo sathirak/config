@@ -32,9 +32,8 @@ in
     # Set it as the default
     rustup default ${rustVersion}
 
-    # Optional: Install standard components if they exist for this old version
-    # Note: rust-analyzer didn't exist in 1.19.3, so we check before adding
-    for component in rustfmt clippy; do
+    # Install the standard components used by the Rust toolchain.
+    for component in rustfmt clippy rust-analyzer; do
       rustup component add $component || echo "Component $component not available for ${rustVersion}"
     done
   '';

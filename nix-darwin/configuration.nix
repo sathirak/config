@@ -9,9 +9,7 @@
 
   # List of packages to install
   environment.systemPackages = with pkgs; [
-    nodejs
     tig
-    git-lfs
     lazygit
     maccy
     tree
@@ -23,8 +21,13 @@
     cmake
     tmux
     statix
-    docker
-    docker-compose
+    # nixpkgs chmods node_modules/@vscode/ripgrep-universal/..., but the darwin
+    # zip ships those binaries under node_modules.asar.unpacked/ instead.
+    (vscode.overrideAttrs (_: {
+      postPatch = ''
+        find Contents -type f -name rg -exec chmod +x {} +
+      '';
+    }))
   ];
 
   # Install fonts

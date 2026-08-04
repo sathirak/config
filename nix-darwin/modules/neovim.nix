@@ -64,10 +64,11 @@ in
     buildifier
     starpls
 
-    # Language servers / formatters (Mason can also install these)
-    # rust-analyzer / rustfmt / clippy come from rustup (modules/rust.nix)
+    # Language servers / formatters managed by Nix-darwin
+    nodejs
     nixd
     nixfmt
+    lua-language-server
     basedpyright
     ruff
     typescript-language-server

@@ -122,6 +122,15 @@ hi('DiagnosticUnderlineWarn', { sp = c.yellow, undercurl = true })
 hi('DiagnosticUnderlineInfo', { sp = c.sky, undercurl = true })
 hi('DiagnosticUnderlineHint', { sp = c.teal, undercurl = true })
 
+-- flash.nvim
+hi('FlashBackdrop', { fg = c.overlay0 })
+hi('FlashMatch', { bg = c.surface1, fg = c.fg, bold = true })
+hi('FlashCurrent', { bg = c.peach, fg = c.bg_dark, bold = true })
+hi('FlashLabel', { bg = c.mauve, fg = c.bg_dark, bold = true })
+hi('FlashPrompt', { fg = c.teal, bold = true })
+hi('FlashPromptIcon', { fg = c.sky, bold = true })
+hi('FlashCursor', { bg = c.rosewater, fg = c.bg_dark })
+
 -- chrome
 hi('FloatBorder', { bg = c.bg_dark, fg = c.surface1 })
 hi('WinSeparator', { fg = c.surface1 })

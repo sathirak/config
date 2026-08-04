@@ -74,7 +74,6 @@ local function open()
   vim.opt_local.cursorline = false
   vim.opt_local.list = false
 
-  if has_session then vim.keymap.set('n', 's', session.restore, { buffer = buf, desc = 'Restore session', silent = true }) end
 end
 
 vim.api.nvim_create_autocmd('VimEnter', {

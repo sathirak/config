@@ -74,7 +74,4 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
   end,
 })
 
-vim.keymap.set('n', '<leader>qs', M.restore, { desc = 'Restore Session' })
-vim.keymap.set('n', '<leader>qd', M.delete, { desc = 'Delete Session' })
-
 return M

@@ -1,4 +1,4 @@
--- lsp/lua: lua_ls + stylua
+-- lsp/lua: lua_ls
 return {
   servers = {
     lua_ls = {
@@ -33,5 +33,4 @@ return {
       },
     },
   },
-  tools = { 'stylua' },
 }

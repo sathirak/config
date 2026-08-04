@@ -22,6 +22,10 @@
       "rev": "6f793b2bcd2d35e201c09520f698bb763220908a",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
+    "flash.nvim": {
+      "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
+      "src": "https://github.com/folke/flash.nvim"
+    },
     "fzf-lua": {
       "rev": "532d463f5c83595192fe740572d8fd6902b2217a",
       "src": "https://github.com/ibhagwan/fzf-lua"

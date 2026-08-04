@@ -1,13 +1,12 @@
 -- neo-tree: file explorer (snacks-like nav)
 local gh = require('util').gh
+local keymaps = require 'config.keymaps'
 
 vim.pack.add {
   { src = gh 'nvim-neo-tree/neo-tree.nvim', version = vim.version.range '*' },
   gh 'nvim-lua/plenary.nvim',
   gh 'MunifTanjim/nui.nvim',
 }
-
-vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
 
 require('neo-tree').setup {
   enable_git_status = false,
@@ -42,24 +41,17 @@ require('neo-tree').setup {
     },
   },
   window = {
-    mappings = {
-      ['\\'] = 'close_window',
-      ['<cr>'] = 'open',
-      ['l'] = 'open',
-      ['h'] = function(state)
-        local node = state.tree:get_node()
-        if node.type == 'directory' and (node:is_expanded() or node.empty_expanded) then
-          state.commands.toggle_node(state)
-        else
-          require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
-        end
-      end,
-      ['Z'] = 'close_all_nodes',
-      ['z'] = 'none',
-    },
+    mappings = keymaps.neo_tree_window_mappings(),
   },
   filesystem = {
     scan_mode = 'deep',
+    hide_root_node = true,
+    -- keep the tree on the buffer you are editing, and pick up on-disk changes
+    follow_current_file = {
+      enabled = true,
+      leave_dirs_open = true,
+    },
+    use_libuv_file_watcher = true,
     filtered_items = {
       visible = true,
       hide_dotfiles = false,
@@ -67,15 +59,7 @@ require('neo-tree').setup {
       hide_hidden = false,
     },
     window = {
-      mappings = {
-        ['<bs>'] = 'navigate_up',
-        ['.'] = 'set_root',
-        ['H'] = 'toggle_hidden',
-        ['I'] = function(state)
-          state.filtered_items.hide_gitignored = not state.filtered_items.hide_gitignored
-          require('neo-tree.sources.manager').refresh(state.name)
-        end,
-      },
+      mappings = keymaps.neo_tree_filesystem_window_mappings(),
     },
   },
 }
