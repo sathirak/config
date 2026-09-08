@@ -1,5 +1,5 @@
 -- lsp/nix: nixd (flake-aware) + nixfmt
-local personal = '(builtins.getFlake "/Users/sathira/.config/nix-darwin")'
+local personal = '(builtins.getFlake "/Users/sathira/.config/nix")'
 
 return {
   servers = {

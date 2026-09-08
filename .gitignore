@@ -2,6 +2,6 @@
 !.gitignore
 !/nvim/
 !/fish/
-!/nix-darwin/
+!/nix/
 !/ghostty/
 .DS_Store

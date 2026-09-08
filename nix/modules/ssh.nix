@@ -31,7 +31,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      nixup = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
+      nixup = "sudo darwin-rebuild switch --flake ~/.config/nix";
       cl = "clear";
       n = "nvim";
       g = "lazygit";
