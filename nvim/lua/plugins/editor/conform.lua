@@ -15,5 +15,6 @@ require('conform').setup {
   },
   formatters_by_ft = {
     bzl = { 'buildifier' },
+    python = { 'ruff_organize_imports', 'ruff_format' },
   },
 }

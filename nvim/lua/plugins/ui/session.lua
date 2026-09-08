@@ -1,4 +1,6 @@
 -- session: per-cwd sessions (auto-save; restore with s on dashboard)
+-- Neo-tree windows break under mksession, so we stash open/expanded state in
+-- globals, close before save, and reopen after restore.
 local M = {}
 
 local function sessions_dir()
@@ -29,10 +31,112 @@ local function has_file_buffers()
   return false
 end
 
+---@return boolean
+local function neo_tree_is_open()
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == 'neo-tree' then
+      return true
+    end
+  end
+  return false
+end
+
+local function mimir_capture()
+  local ok, mimir = pcall(require, 'plugins.ui.mimir')
+  if not ok then
+    vim.g.MimirWasOpen = 0
+    return
+  end
+  vim.g.MimirWasOpen = mimir.is_open() and 1 or 0
+  mimir.close()
+end
+
+local function mimir_restore()
+  vim.schedule(function()
+    local ok, mimir = pcall(require, 'plugins.ui.mimir')
+    if not ok then
+      return
+    end
+    -- only reopen when the session explicitly recorded it as open
+    if vim.g.MimirWasOpen == 1 then
+      mimir.open { focus = false }
+    else
+      mimir.close()
+    end
+  end)
+end
+
+---@return string[]
+local function neo_tree_expanded_folders()
+  local ok, manager = pcall(require, 'neo-tree.sources.manager')
+  if not ok then
+    return {}
+  end
+  local state = manager.get_state 'filesystem'
+  if not state or not state.tree then
+    return {}
+  end
+  local ok_r, renderer = pcall(require, 'neo-tree.ui.renderer')
+  if not ok_r then
+    return {}
+  end
+  return renderer.get_expanded_nodes(state.tree) or {}
+end
+
+local function neo_tree_capture()
+  if not neo_tree_is_open() then
+    vim.g.NeoTreeWasOpen = 0
+    vim.g.NeoTreeExpanded = ''
+    return
+  end
+
+  vim.g.NeoTreeWasOpen = 1
+  local folders = neo_tree_expanded_folders()
+  vim.g.NeoTreeExpanded = table.concat(folders, '\n')
+  pcall(vim.cmd.Neotree, 'close')
+end
+
+local function neo_tree_restore()
+  if vim.g.NeoTreeWasOpen ~= 1 then
+    pcall(function()
+      require('neo-tree.ui.renderer').clean_invalid_neotree_buffers(true)
+    end)
+    return
+  end
+
+  local expanded = {}
+  if type(vim.g.NeoTreeExpanded) == 'string' and vim.g.NeoTreeExpanded ~= '' then
+    for line in vim.g.NeoTreeExpanded:gmatch '[^\n]+' do
+      expanded[#expanded + 1] = line
+    end
+  end
+
+  vim.schedule(function()
+    pcall(function()
+      require('neo-tree.ui.renderer').clean_invalid_neotree_buffers(true)
+    end)
+
+    if #expanded > 0 then
+      local ok, manager = pcall(require, 'neo-tree.sources.manager')
+      if ok then
+        local state = manager.get_state 'filesystem'
+        state.force_open_folders = expanded
+      end
+    end
+
+    -- show keeps focus on the restored file buffer
+    pcall(vim.cmd.Neotree, 'show')
+  end)
+end
+
 function M.save()
   if not has_file_buffers() then
     return
   end
+
+  neo_tree_capture()
+  mimir_capture()
 
   vim.fn.mkdir(sessions_dir(), 'p')
   local path = M.path()
@@ -55,7 +159,11 @@ function M.restore()
   local ok, err = pcall(vim.cmd.source, vim.fn.fnameescape(path))
   if not ok then
     vim.notify('Failed to restore session:\n' .. tostring(err), vim.log.levels.ERROR)
+    return
   end
+
+  neo_tree_restore()
+  mimir_restore()
 end
 
 function M.delete()
@@ -63,8 +171,12 @@ function M.delete()
   if vim.fn.filereadable(path) == 1 then
     vim.fn.delete(path)
   end
+  vim.g.NeoTreeWasOpen = nil
+  vim.g.NeoTreeExpanded = nil
+  vim.g.MimirWasOpen = nil
 end
 
+-- uppercase globals are required for sessionoptions+=globals
 vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 
 vim.api.nvim_create_autocmd('VimLeavePre', {

@@ -18,6 +18,7 @@
     ./modules/neovim.nix
     ./modules/ssh.nix
     ./modules/jupiter.nix
+    ./modules/agents.nix
   ];
 
   home.stateVersion = "25.05";

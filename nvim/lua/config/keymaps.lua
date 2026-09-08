@@ -17,19 +17,75 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' })
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
-map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
-map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus lower' })
-map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus upper' })
+-- windows (LazyVim-style)
+map('n', '<C-h>', '<C-w>h', { desc = 'Go to Left Window', remap = true })
+map('n', '<C-j>', '<C-w>j', { desc = 'Go to Lower Window', remap = true })
+map('n', '<C-k>', '<C-w>k', { desc = 'Go to Upper Window', remap = true })
+map('n', '<C-l>', '<C-w>l', { desc = 'Go to Right Window', remap = true })
 
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
 map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
 map('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
 map('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
 
+-- <leader>w is a proxy for <C-w>, so <leader>wh / <leader>wv / … all work
+map('n', '<leader>w', '<C-w>', { desc = 'Windows', remap = true })
 map('n', '<leader>-', '<C-W>s', { desc = 'Split Window Below', remap = true })
 map('n', '<leader>|', '<C-W>v', { desc = 'Split Window Right', remap = true })
 map('n', '<leader>wd', '<C-W>c', { desc = 'Delete Window', remap = true })
+map('n', '<C-w>d', '<C-W>c', { desc = 'Delete Window', remap = true })
+map('n', '<leader>wo', '<C-W>o', { desc = 'Delete Other Windows', remap = true })
+map('n', '<leader>ww', '<C-W>p', { desc = 'Other Window', remap = true })
+map('n', '<leader>w=', '<C-W>=', { desc = 'Equalize Windows', remap = true })
+map('n', '<leader>w-', '<C-W>s', { desc = 'Split Window Below', remap = true })
+map('n', '<leader>w|', '<C-W>v', { desc = 'Split Window Right', remap = true })
+map('n', '<leader>wH', '<C-W>H', { desc = 'Move Window to Far Left', remap = true })
+map('n', '<leader>wJ', '<C-W>J', { desc = 'Move Window to Far Bottom', remap = true })
+map('n', '<leader>wK', '<C-W>K', { desc = 'Move Window to Far Top', remap = true })
+map('n', '<leader>wL', '<C-W>L', { desc = 'Move Window to Far Right', remap = true })
+map('n', '<leader>ws', '<C-W>s', { desc = 'Split Window Below', remap = true })
+map('n', '<leader>wv', '<C-W>v', { desc = 'Split Window Right', remap = true })
+
+do
+  ---@type { win?: integer, width?: integer, height?: integer }
+  local zoom = {}
+
+  local function toggle_maximize()
+    local cur = vim.api.nvim_get_current_win()
+    if zoom.win and zoom.win == cur and vim.api.nvim_win_is_valid(cur) then
+      if zoom.width then
+        vim.api.nvim_win_set_width(cur, zoom.width)
+      end
+      if zoom.height then
+        vim.api.nvim_win_set_height(cur, zoom.height)
+      end
+      zoom = {}
+      return
+    end
+
+    zoom = {
+      win = cur,
+      width = vim.api.nvim_win_get_width(cur),
+      height = vim.api.nvim_win_get_height(cur),
+    }
+    vim.cmd 'wincmd |'
+    vim.cmd 'wincmd _'
+  end
+
+  map('n', '<leader>wm', toggle_maximize, { desc = 'Maximize Window' })
+  map('n', '<C-w>m', toggle_maximize, { desc = 'Maximize Window' })
+end
+
+-- tabs (LazyVim-style)
+map('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
+map('n', '<leader><tab>o', '<cmd>tabonly<cr>', { desc = 'Close Other Tabs' })
+map('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
+map('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+map('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+map('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+map('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
+map('n', ']<tab>', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+map('n', '[<tab>', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 
 map('n', 'J', function()
   vim.diagnostic.open_float {
@@ -131,6 +187,9 @@ end, { desc = 'Toggle Flash Search' })
 
 map('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal' })
 map('n', '<leader>n', '<cmd>Navbuddy<cr>', { desc = 'Navbuddy' })
+map('n', '<leader>m', function()
+  require('plugins.ui.mimir').toggle()
+end, { desc = 'Toggle mimir' })
 
 map('n', '<leader>qs', function()
   require('plugins.ui.session').restore()
@@ -138,14 +197,7 @@ end, { desc = 'Restore Session' })
 map('n', '<leader>qd', function()
   require('plugins.ui.session').delete()
 end, { desc = 'Delete Session' })
-
-map('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })
-map('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
-map('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
-map('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
-map('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
-map('n', '<leader><tab>o', '<cmd>tabonly<cr>', { desc = 'Close Other Tabs' })
-map('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('dashboard-keymaps', { clear = true }),

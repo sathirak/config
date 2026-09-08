@@ -1,5 +1,5 @@
 -- lsp/nix: nixd (flake-aware) + nixfmt
-local flake = '(builtins.getFlake "' .. vim.fn.expand '~/.config/nix-darwin' .. '")'
+local personal = '(builtins.getFlake "/Users/sathira/.config/nix-darwin")'
 
 return {
   servers = {
@@ -7,17 +7,17 @@ return {
       settings = {
         nixd = {
           nixpkgs = {
-            expr = 'import ' .. flake .. '.inputs.nixpkgs { }',
+            expr = 'import ' .. personal .. '.inputs.nixpkgs { }',
           },
           formatting = {
             command = { 'nixfmt' },
           },
           options = {
             ['nix-darwin'] = {
-              expr = flake .. '.darwinConfigurations.neptune.options',
+              expr = personal .. '.darwinConfigurations.neptune.options',
             },
             home_manager = {
-              expr = flake
+              expr = personal
                 .. '.darwinConfigurations.neptune.options.home-manager.users.type.getSubOptions []',
             },
           },

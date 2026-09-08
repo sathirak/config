@@ -8,11 +8,64 @@ vim.pack.add {
   gh 'MunifTanjim/nui.nvim',
 }
 
-local S = '\u{f486} ' -- Structure (File, Module, Class, Interface, Struct, Object)
-local F = '\u{f49d} ' -- Function (Function, Method, Constructor, Event, Macro)
-local V = '  ' -- Variable (Variable, Field, Property, Constant, Key)
-local T = '\u{f488} ' -- Type (Enum, EnumMember, TypeParameter)
-local L = '\u{f424} ' -- Value (String, Number, Boolean, Array, Null, Operator)
+local S = ' ' -- Structure (File, Module, Namespace, Package, Class, Interface, Object, Struct)
+local F = ' ' -- Function (Method, Function, Constructor, Event, Macro)
+local V = ' ' -- Variable (Property, Field, Variable, Constant, Key)
+local T = ' ' -- Type (Enum, EnumMember, TypeParameter)
+local L = '  ' -- Value (String, Number, Boolean, Array, Null, Operator)
+
+-- Apply colorscheme colors to navbuddy/navic symbol groups
+local function apply_navic_highlights()
+  local category_hl = {
+    -- S: Structure
+    NavicIconsFile          = 'Type',
+    NavicIconsModule        = 'Type',
+    NavicIconsNamespace     = 'Type',
+    NavicIconsPackage       = 'Type',
+    NavicIconsClass         = 'Type',
+    NavicIconsInterface     = 'Type',
+    NavicIconsObject        = 'Type',
+    NavicIconsStruct        = 'Type',
+
+    -- F: Function
+    NavicIconsFunction      = 'Function',
+    NavicIconsMethod        = 'Function',
+    NavicIconsConstructor   = 'Function',
+    NavicIconsEvent         = 'Function',
+    NavicIconsMacro         = 'Function',
+
+    -- V: Variable
+    NavicIconsVariable      = 'Identifier',
+    NavicIconsProperty      = 'Identifier',
+    NavicIconsField         = 'Identifier',
+    NavicIconsConstant      = 'Identifier',
+    NavicIconsKey           = 'Identifier',
+
+    -- T: Type
+    NavicIconsEnum          = 'TypeDef',
+    NavicIconsEnumMember    = 'TypeDef',
+    NavicIconsTypeParameter = 'TypeDef',
+
+    -- L: Value / Literal
+    NavicIconsString        = 'String',
+    NavicIconsNumber        = 'String',
+    NavicIconsBoolean       = 'String',
+    NavicIconsArray         = 'String',
+    NavicIconsNull          = 'String',
+    NavicIconsOperator      = 'String',
+  }
+
+  for group, link in pairs(category_hl) do
+    vim.api.nvim_set_hl(0, group, { link = link, default = true })
+  end
+end
+
+apply_navic_highlights()
+
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('navbuddy-colors', { clear = true }),
+  callback = apply_navic_highlights,
+})
 
 require('nvim-navbuddy').setup {
   lsp = { auto_attach = true },
@@ -28,38 +81,38 @@ require('nvim-navbuddy').setup {
     enabled = true,
     icons = {
       leaf = '  ',
-      leaf_selected = ' \u{f401} ',
-      branch = ' \u{f470} ',
+      leaf_selected = '  ',
+      branch = ' 󰄾 ',
     },
   },
   icons = {
-    [1]   = S, -- File
-    [2]   = S, -- Module
-    [3]   = S, -- Namespace
-    [4]   = S, -- Package
-    [5]   = S, -- Class
-    [6]   = F, -- Method
-    [7]   = V, -- Property
-    [8]   = V, -- Field
-    [9]   = F, -- Constructor
-    [10]  = T, -- Enum
-    [11]  = S, -- Interface
-    [12]  = F, -- Function
-    [13]  = V, -- Variable
-    [14]  = V, -- Constant
-    [15]  = L, -- String
-    [16]  = L, -- Number
-    [17]  = L, -- Boolean
-    [18]  = L, -- Array
-    [19]  = S, -- Object
-    [20]  = V, -- Key
-    [21]  = L, -- Null
-    [22]  = T, -- EnumMember
-    [23]  = S, -- Struct
-    [24]  = F, -- Event
-    [25]  = L, -- Operator
-    [26]  = T, -- TypeParameter
-    [255] = F, -- Macro
+    File          = S,
+    Module        = S,
+    Namespace     = S,
+    Package       = S,
+    Class         = S,
+    Method        = F,
+    Property      = V,
+    Field         = V,
+    Constructor   = F,
+    Enum          = T,
+    Interface     = S,
+    Function      = F,
+    Variable      = V,
+    Constant      = V,
+    String        = L,
+    Number        = L,
+    Boolean       = L,
+    Array         = L,
+    Object        = S,
+    Key           = V,
+    Null          = L,
+    EnumMember    = T,
+    Struct        = S,
+    Event         = F,
+    Operator      = L,
+    TypeParameter = T,
+    Macro         = F,
   },
   mappings = keymaps.navbuddy_mappings(),
   use_default_mappings = true,

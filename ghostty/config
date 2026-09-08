@@ -48,7 +48,7 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 theme = Carbonfox
-shell-integration = fish
+shell-integration = zsh
 scrollback-limit = 100000000
 
 font-size = 14

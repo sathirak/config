@@ -4,7 +4,7 @@
   # Define the user here to make it available for home-manager
   users.users.sathira = {
     name = "sathira";
-    home = "/Users/sathira"; # Make sure this matches your home directory
+    home = "/Users/sathira";
   };
 
   # List of packages to install
@@ -21,6 +21,7 @@
     cmake
     tmux
     statix
+    blueutil # overnight sleep prep (`batterysleep`) — toggle BT cleanly
     # nixpkgs chmods node_modules/@vscode/ripgrep-universal/..., but the darwin
     # zip ships those binaries under node_modules.asar.unpacked/ instead.
     (vscode.overrideAttrs (_: {
@@ -61,4 +62,5 @@
       };
     };
   };
+
 }

@@ -9,15 +9,19 @@ vim.pack.add {
 }
 
 require('neo-tree').setup {
+  hide_root_node = true,
+  -- blank neo-tree windows left by mksession get cleaned on restore
+  auto_clean_after_session_restore = true,
   enable_git_status = false,
+  enable_diagnostics = true,
+  enable_opened_markers = true,
   default_component_configs = {
     icon = {
       folder_closed = '',
-      folder_open = '',
+      folder_open = '',
       folder_empty = '',
-      folder_empty_open = '',
+      folder_empty_open = '',
       default = '',
-      -- nvim-web-devicons would otherwise fill file icons
       provider = function(icon, node)
         if node.type == 'file' then
           icon.text = ''
@@ -26,7 +30,24 @@ require('neo-tree').setup {
         return icon
       end,
     },
-    name = { use_git_status_colors = false },
+    name = {
+      use_git_status_colors = false,
+      highlight_opened_files = true,
+    },
+    diagnostics = {
+      symbols = {
+        error = ' ',
+        warn = ' ',
+        info = ' ',
+        hint = ' ',
+      },
+      highlights = {
+        error = 'DiagnosticError',
+        warn = 'DiagnosticWarn',
+        info = 'DiagnosticInfo',
+        hint = 'DiagnosticHint',
+      },
+    },
   },
   renderers = {
     directory = {
@@ -34,18 +55,20 @@ require('neo-tree').setup {
       { 'icon' },
       { 'current_filter' },
       { 'name' },
+      { 'diagnostics', errors_only = true },
     },
     file = {
       { 'indent' },
       { 'name' },
+      { 'diagnostics' },
     },
   },
   window = {
     mappings = keymaps.neo_tree_window_mappings(),
+    width = 40,
   },
   filesystem = {
     scan_mode = 'deep',
-    hide_root_node = true,
     -- keep the tree on the buffer you are editing, and pick up on-disk changes
     follow_current_file = {
       enabled = true,

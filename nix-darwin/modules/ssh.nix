@@ -34,7 +34,7 @@
       nixup = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
       cl = "clear";
       n = "nvim";
-      lg = "lazygit";
+      g = "lazygit";
     };
     interactiveShellInit = ''
       # Single persistent ssh-agent (shared across terminals) for Git SSH signing.
