@@ -24,9 +24,7 @@ vim.o.confirm = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.fillchars = { eob = ' ' }
 
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 vim.diagnostic.config {
   update_in_insert = false,

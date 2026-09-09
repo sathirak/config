@@ -25,5 +25,6 @@ collect(plugins_dir, '', modules)
 table.sort(modules)
 
 for _, module in ipairs(modules) do
-  require('plugins.' .. module)
+  local ok, err = pcall(require, 'plugins.' .. module)
+  if not ok then vim.notify(('Failed to load plugins.%s:\n%s'):format(module, err), vim.log.levels.ERROR) end
 end

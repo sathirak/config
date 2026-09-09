@@ -1,8 +1,6 @@
 -- colorscheme: eternal (static, no lush)
 vim.cmd 'highlight clear'
-if vim.fn.exists 'syntax_on' == 1 then
-  vim.cmd 'syntax reset'
-end
+if vim.fn.exists 'syntax_on' == 1 then vim.cmd 'syntax reset' end
 
 vim.g.colors_name = 'eternal'
 vim.o.background = 'dark'
@@ -40,9 +38,7 @@ local c = {
   lavender = '#b4befe',
 }
 
-local function hi(group, opts)
-  vim.api.nvim_set_hl(0, group, opts)
-end
+local function hi(group, opts) vim.api.nvim_set_hl(0, group, opts) end
 
 -- ui
 hi('Normal', { bg = c.bg, fg = c.fg })

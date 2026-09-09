@@ -8,9 +8,7 @@ local specs = {
   gh 'nvim-telescope/telescope-ui-select.nvim',
   gh 'nvim-tree/nvim-web-devicons',
 }
-if vim.fn.executable 'make' == 1 then
-  table.insert(specs, gh 'nvim-telescope/telescope-fzf-native.nvim')
-end
+if vim.fn.executable 'make' == 1 then table.insert(specs, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 
 vim.pack.add(specs)
 

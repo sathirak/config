@@ -17,8 +17,7 @@ return {
               expr = personal .. '.darwinConfigurations.neptune.options',
             },
             home_manager = {
-              expr = personal
-                .. '.darwinConfigurations.neptune.options.home-manager.users.type.getSubOptions []',
+              expr = personal .. '.darwinConfigurations.neptune.options.home-manager.users.type.getSubOptions []',
             },
           },
         },
