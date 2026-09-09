@@ -61,7 +61,7 @@ in
     lanFirst = {
       enable = lib.mkOption {
         type = lib.types.bool;
-        default = true;
+        default = false;
         description = ''
           If true, ping the LAN address for up to attemptSeconds; on success connect with plain TCP
           (nc) to that address. Otherwise use Cloudflare Access SSH only.
@@ -76,7 +76,7 @@ in
 
       attemptSeconds = lib.mkOption {
         type = lib.types.int;
-        default = 10;
+        default = 2;
         description = "How long to keep trying ping (once per second) before using Cloudflare.";
       };
 
@@ -94,12 +94,16 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.cloudflared ];
 
-    programs.ssh.matchBlocks =
+    programs.ssh.settings =
       {
-        ${cfg.host} = { inherit proxyCommand; };
+        ${cfg.host} = {
+          ProxyCommand = proxyCommand;
+        };
       }
       // lib.optionalAttrs (cfg.lanFirst.enable && cfg.lanFirst.addHostForLanAddress) {
-        ${cfg.lanFirst.address} = { inherit proxyCommand; };
+        ${cfg.lanFirst.address} = {
+          ProxyCommand = proxyCommand;
+        };
       };
   };
 }

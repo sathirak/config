@@ -69,7 +69,6 @@ require('neo-tree').setup {
   },
   filesystem = {
     scan_mode = 'deep',
-    -- keep the tree on the buffer you are editing, and pick up on-disk changes
     follow_current_file = {
       enabled = true,
       leave_dirs_open = true,

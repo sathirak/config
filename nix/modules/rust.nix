@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  username,
-  ...
-}:
+{ pkgs, lib, ... }:
+
 let
   rustVersion = "1.93";
 in
@@ -20,21 +16,16 @@ in
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 
-  home.activation.rustup-setup = ''
-    # Ensure rustup is initialized and the specific version is installed
+  # Soft activation: never fail the HM switch if rustup/network is unavailable.
+  home.activation.rustup-setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="$PATH:${pkgs.rustup}/bin"
-
-    echo "Syncing Rust version to: ${rustVersion}"
-
-    # Install the specific toolchain if not present
-    rustup toolchain install ${rustVersion}
-
-    # Set it as the default
-    rustup default ${rustVersion}
-
-    # Install the standard components used by the Rust toolchain.
-    for component in rustfmt clippy rust-analyzer; do
-      rustup component add $component || echo "Component $component not available for ${rustVersion}"
-    done
+    if command -v rustup >/dev/null 2>&1; then
+      echo "Syncing Rust toolchain ${rustVersion} (best-effort)"
+      rustup toolchain install ${rustVersion} >/dev/null 2>&1 || true
+      rustup default ${rustVersion} >/dev/null 2>&1 || true
+      for component in rustfmt clippy rust-analyzer; do
+        rustup component add "$component" >/dev/null 2>&1 || true
+      done
+    fi
   '';
 }

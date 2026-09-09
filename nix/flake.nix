@@ -35,7 +35,6 @@
             home-manager.users.sathira = import ./home.nix;
           }
           ./configuration.nix
-          ./prometheus.nix
         ];
       };
     };

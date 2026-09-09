@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   # Setting up git
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       url = {
         "git@github.com:".insteadOf = "https://github.com/";
         "git@github.com:".pushInsteadOf = "https://github.com/";

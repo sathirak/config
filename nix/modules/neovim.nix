@@ -1,8 +1,7 @@
 { pkgs, ... }:
 
 let
-  # nvim-treesitter requires tree-sitter CLI >= 0.26.1; nixpkgs ships an older release.
-  # Official GitHub release binaries satisfy the health check and TSInstall.
+  # nvim-treesitter wants tree-sitter CLI >= 0.26.1; nixpkgs is often older.
   tree-sitter-release =
     {
       "aarch64-darwin" = {
@@ -40,31 +39,21 @@ let
       };
 in
 {
-  # Do not use programs.neovim — it overwrites ~/.config/nvim/init.lua and fights
-  # the git-managed kickstart/argus config. Install the binary + tools only.
+  # Do not use programs.neovim — it fights the git-managed ~/.config/nvim.
   home.packages = with pkgs; [
     neovim
     tree-sitter-cli
-    mercurial
-    imagemagick
-    tectonic
-    mermaid-cli
-    go
-    luarocks
-    php
-    phpPackages.composer
 
-    # Fuzzy finder backends for fzf-lua
+    # Finder backends (Telescope)
     fzf
     ripgrep
     fd
 
-    # Bazel / Starlark
-    bazelisk
+    # Bazel / Starlark (nvim lsp/bazel.lua)
     buildifier
     starpls
 
-    # Language servers / formatters managed by Nix-darwin
+    # Language servers / formatters (Nix owns binaries; nvim only configures)
     nodejs
     nixd
     nixfmt
