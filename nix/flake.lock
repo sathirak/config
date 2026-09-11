@@ -3,15 +3,16 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "os-kit",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1788921139,
-        "narHash": "sha256-2wRuvf9UDw1SYWtBcxNmxLeAtNU1i/hc1c0AKQHdvlM=",
+        "lastModified": 1789099078,
+        "narHash": "sha256-zzHj2wl69724lzx7DLAVziWbL75wRIk+xJ3duD0Bgrc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a2dbe7c2c9333e8234ae8114c7f731784201d108",
+        "rev": "f10b3f2ad4aae9259617a1ff518cc921e3394228",
         "type": "github"
       },
       "original": {
@@ -23,6 +24,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
+          "os-kit",
           "nixpkgs"
         ]
       },
@@ -36,18 +38,17 @@
       },
       "original": {
         "owner": "nix-darwin",
-        "ref": "master",
         "repo": "nix-darwin",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788894124,
-        "narHash": "sha256-guyexwrrF5GBKqjO0eg9LNIvrXn4j2frNak63sDr8zg=",
+        "lastModified": 1789073787,
+        "narHash": "sha256-xfX/toC2QV707s06GbP4II/TxYF0fNQj7s5/LClNDKc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "da39501c8d0a093136854eddcd6927c8a8bb0d8f",
+        "rev": "aff8a0b28396750446e5537a96461bc4facdb287",
         "type": "github"
       },
       "original": {
@@ -57,11 +58,29 @@
         "type": "github"
       }
     },
-    "root": {
+    "os-kit": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789105158,
+        "narHash": "sha256-LIVn8WR7Kl+t7rYoSXahyGqDb9P2yxGMoXFQPU3Dmeg=",
+        "path": "/Users/sathira/Projects/usm/worktrees/nix/nix/os-kit",
+        "type": "path"
+      },
+      "original": {
+        "path": "/Users/sathira/Projects/usm/worktrees/nix/nix/os-kit",
+        "type": "path"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "os-kit": "os-kit"
       }
     }
   },

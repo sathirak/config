@@ -1,12 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-
   imports = [
     ./modules/java.nix
-    ./modules/rust.nix
-    ./modules/git.nix
+    #./modules/rust.nix
     ./modules/neovim.nix
     ./modules/ssh.nix
     ./modules/fish.nix
@@ -24,10 +21,6 @@
     enableBashIntegration = true;
     enableFishIntegration = true;
   };
-
-  home.packages = with pkgs; [
-    pyenv
-  ];
 
   home.stateVersion = "25.05";
 }

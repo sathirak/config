@@ -3,37 +3,65 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    os-kit = {
+      url = "path:/Users/sathira/Projects/usm/worktrees/nix/nix/os-kit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
       self,
-      nix-darwin,
-      home-manager,
+      nixpkgs,
+      os-kit,
       ...
     }:
+    let
+      hostname = "neptune";
+      username = "sathira";
+    in
     {
-      darwinConfigurations."neptune" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.${hostname} = os-kit.lib.mkSystem {
+        system = "aarch64-darwin";
+        inherit hostname username;
+
         modules = [
-          home-manager.darwinModules.home-manager
+          os-kit.modules.default
+
           {
-            networking.hostName = "neptune";
-            nixpkgs.hostPlatform = "aarch64-darwin";
+            base = {
+              enable = true;
+              packages = [ ];
+            };
+
+            git = {
+              enable = true;
+              userName = "Sathira Kulathunga";
+              userEmail = "sathira@getren.xyz";
+              signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmePaEvB2BNpv85MUkb/XW3l4tTUnprqyzk7If0w5Wv";
+            };
+
+            rust = {
+              enable = true;
+            };
+
             nixpkgs.config.allowUnfree = true;
             nix.settings.experimental-features = "nix-command flakes";
             programs.fish.enable = true;
+
             system = {
               configurationRevision = self.rev or self.dirtyRev or null;
               stateVersion = 6;
-              primaryUser = "sathira";
+              primaryUser = username;
             };
+
             home-manager.backupFileExtension = "backup";
-            home-manager.users.sathira = import ./home.nix;
+            home-manager.users.${username} = {
+              imports = [ ./home.nix ];
+            };
           }
+
           ./configuration.nix
         ];
       };
