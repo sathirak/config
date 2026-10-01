@@ -40,11 +40,11 @@
               userName = "Sathira Kulathunga";
               userEmail = "sathira@getren.xyz";
               signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmePaEvB2BNpv85MUkb/XW3l4tTUnprqyzk7If0w5Wv";
+              onePasswordSigning = true;
             };
 
-            rust = {
-              enable = true;
-            };
+            rust.enable = true;
+            jupiter.enable = true;
 
             nixpkgs.config.allowUnfree = true;
             nix.settings.experimental-features = "nix-command flakes";

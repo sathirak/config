@@ -9,18 +9,6 @@
       g = "lazygit";
     };
     interactiveShellInit = ''
-      set -gx SSH_AUTH_SOCK $HOME/.ssh/agent.sock
-      ssh-add -l >/dev/null 2>&1
-      switch $status
-        case 0
-        case 1
-          ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519 2>/dev/null
-        case 2
-          rm -f $SSH_AUTH_SOCK
-          eval (ssh-agent -a $SSH_AUTH_SOCK -c)
-          ssh-add --apple-use-keychain $HOME/.ssh/id_ed25519 2>/dev/null
-      end
-
       if test -x /opt/homebrew/bin/brew
         eval "$(/opt/homebrew/bin/brew shellenv)"
       end

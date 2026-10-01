@@ -4,16 +4,12 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    # RFC 42 settings (OpenSSH directive names). Replaces deprecated matchBlocks.
     settings = {
-      # GitHub only — 1Password agent (path must be quoted: space in "Group Containers").
-      "github.com ssh.github.com" = {
+      "*" = {
         IdentityAgent = [
           "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\""
         ];
-      };
-
-      "*" = {
+        IdentitiesOnly = true;
         ForwardAgent = false;
         AddKeysToAgent = "no";
         Compression = false;

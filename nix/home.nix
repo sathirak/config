@@ -7,7 +7,6 @@
     ./modules/neovim.nix
     ./modules/ssh.nix
     ./modules/fish.nix
-    ./modules/jupiter.nix
     ./modules/agents.nix
   ];
 
