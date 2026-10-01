@@ -4,4 +4,5 @@
 !/fish/
 !/nix/
 !/ghostty/
+!README.md
 .DS_Store
