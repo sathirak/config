@@ -2,4 +2,4 @@
 # VERSION: 3.0
 SETUVAR --export SSH_AUTH_SOCK:/Users/sathira/\x2essh/agent\x2esock
 SETUVAR __fish_initialized:4300
-SETUVAR fish_user_paths:/Users/sathira/\x2econfig/bin\x1e/Users/sathira/\x2elocal/bin\x1e/Users/sathira/\x2ecargo/bin
+SETUVAR fish_user_paths:/Users/sathira/\x2eopencode/bin\x1e/Users/sathira/\x2econfig/bin\x1e/Users/sathira/\x2elocal/bin\x1e/Users/sathira/\x2ecargo/bin
